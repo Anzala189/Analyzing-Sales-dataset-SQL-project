@@ -44,17 +44,35 @@ Your query output should be presented in the following format:
 # SOLUTION
 
 ```sql
-SELECT product_line,
-    CASE WHEN EXTRACT('month' from date) = 6 THEN 'June'
-        WHEN EXTRACT('month' from date) = 7 THEN 'July'
-        WHEN EXTRACT('month' from date) = 8 THEN 'August'
-    END as month,
+-- Create the view with net revenue per product line, month, and warehouse
+-- Step 1: create a subquery that calculates the month number
+SELECT 
+    product_line,
+    CASE month_num
+        WHEN 6 THEN 'June'
+        WHEN 7 THEN 'July'
+        WHEN 8 THEN 'August'
+    END AS month,
     warehouse,
-	SUM(total) - SUM(payment_fee) AS net_revenue
-FROM sales
-WHERE client_type = 'Wholesale'
-GROUP BY product_line, warehouse, month
-ORDER BY product_line, month, net_revenue DESC
+    SUM(total) - SUM(payment_fee) AS net_revenue
+FROM (
+    SELECT 
+        product_line,
+        warehouse,
+        total,
+        payment_fee,
+        MONTH(date) AS month_num
+    FROM data_sales
+    WHERE client_type = 'Wholesale'
+      AND MONTH(date) IN (6,7,8)
+) AS t
+GROUP BY 
+    product_line,
+    warehouse,
+    month_num
+ORDER BY 
+    product_line,
+    month_num DESC, net_revenue DESC;
 ```
 
 ## Output:
