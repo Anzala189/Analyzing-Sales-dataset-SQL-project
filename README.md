@@ -7,6 +7,9 @@ They operate three warehouses in the area, selling both retail and wholesale. Th
 
 The board of directors wants to gain a better understanding of wholesale revenue by product line, and how this varies month-to-month and across warehouses. You have been tasked with calculating net revenue for each product line and grouping results by month and warehouse. The results should be filtered so that only `"Wholesale"` orders are included.
 
+
+![image](https://github.com/Anzala189/Analyzing-Sales-dataset-SQL-project/blob/ded5e4ea4a51f366e9fe76bbe51190893b0c90f0/motorcycle.jpg)
+
 They have provided you with access to their database, which contains the following table called `sales`:
 
 ## Sales
